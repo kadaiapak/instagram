@@ -3,6 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const authCtrl = {
+  //@desc   untuk register user
+  //@route  /api/register
+  //@access public
   register: async (req, res) => {
     try {
       const { fullname, username, email, password, gender } = req.body;

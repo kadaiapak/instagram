@@ -2,8 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./database/db");
 const cors = require("cors");
-const authRouter = require("./route/authRouter");
 const cookieParser = require("cookie-parser");
+
+// export ROuter
+const userRouter = require("./route/userRouter");
+const authRouter = require("./route/authRouter");
 
 const app = express();
 app.use(express.json());
@@ -18,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api", authRouter);
+app.use("/api", userRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(
