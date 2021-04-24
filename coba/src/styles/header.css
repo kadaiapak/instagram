@@ -1,0 +1,166 @@
+.navbar_container {
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  min-height: 55px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.navbar_container .container {
+  height: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.navbar_container nav.navbar {
+  height: 100%;
+  padding: 0;
+}
+
+.navbar-logo {
+  width: 100px;
+  height: auto;
+  padding: 0;
+}
+
+.navbar-logo img {
+  width: 100px;
+  height: auto;
+}
+
+img .small-avatar {
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+}
+
+/* HEADER MENU */
+
+.menu .material-icons {
+  font-size: 25px;
+}
+
+.menu .dropdown-menu {
+  position: absolute;
+  left: inherit;
+  right: 0;
+}
+
+.menu label {
+  cursor: pointer;
+}
+
+/* ------Search--------- */
+
+/* css agar child nya bisa position absolute terhadap parent */
+.search_form {
+  position: relative;
+}
+
+/* css untuk form inputnya agar lebih baguss */
+.search_form #search {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  min-width: 250px;
+  width: 100%;
+  outline: none;
+  text-indent: 5px;
+  border-radius: 3px;
+}
+
+/* css agar icon search nya bisa terletak di tengah dari from inout */
+.search_icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.search_form #search:focus + .search_icon {
+  left: 30px;
+}
+
+.search_form .material-icons {
+  font-size: 14px;
+  transform: translateY(3px);
+}
+
+.close_search {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.search_form .users {
+  position: absolute;
+  width: 100%;
+  min-width: 250px;
+  background: #fafafa;
+  max-height: calc(100vh - 150px);
+  overflow: auto;
+  margin-top: 2px;
+}
+
+/* style untuk gif saat loading pencarian */
+.search_form .loading img {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+}
+
+/* style untuk merapakatkan username saat melakukan pencarian user */
+.username {
+  margin-bottom: -8px;
+}
+
+/* -------------Responsive ----------------- */
+
+@media (max-width: 768px) {
+  /* css agar menu pindah kebawah saat mode layar kecil */
+  .menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 0 10px #ddd;
+    z-index: 2;
+  }
+
+  /* css agar menu yang pindah kebawah tersebut bisa align dengan rapi */
+  .menu .navbar-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  /* css untuk menu dropdown bisa muncul saat mode layar kecil */
+  .menu .dropdown-menu {
+    bottom: 100%;
+    top: auto;
+  }
+
+  .search_form {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .navbar-logo {
+    margin: auto;
+  }
+}

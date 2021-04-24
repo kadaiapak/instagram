@@ -1,0 +1,36 @@
+.follow {
+  width: 80px;
+  display: inline-block;
+  border: none;
+  background: #0095f6;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 26px;
+  outline: none;
+  padding: 2px 10px;
+}
+
+.unfollow {
+  width: 80px;
+  display: inline-block;
+  border: none;
+  background: red;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 26px;
+  outline: none;
+  padding: 2px 10px;
+}
+
+.follow:focus {
+  outline: 0 !important;
+}
+.unfollow:focus {
+  outline: 0 !important;
+}

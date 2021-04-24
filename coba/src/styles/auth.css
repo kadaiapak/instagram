@@ -1,0 +1,58 @@
+.auth_page {
+  background: #fdfdfd;
+  width: 100%;
+  min-height: 100vh;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  position: relative;
+}
+
+.auth_logo {
+  width: 200px;
+  height: auto;
+  margin: 20px auto 20px auto;
+}
+
+.auth_logo img {
+  width: 200px;
+  height: auto;
+}
+
+.auth_page form {
+  background: #fff;
+  max-width: 450px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.borderSatu {
+  border: 1px solid #ddd;
+  padding: 10px 25px 10px 25px;
+}
+
+.borderDua {
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 10px 25px;
+}
+
+.borderDua p {
+  margin: 0;
+}
+
+.auth_page .pass {
+  position: relative;
+}
+
+.auth_page .pass .show {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.5;
+}
