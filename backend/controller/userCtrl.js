@@ -29,6 +29,40 @@ const userCtrl = {
       res.status(500).json({ msg: err.message });
     }
   },
+
+  updateUser: async (req, res) => {
+    try {
+      const {
+        avatar,
+        fullname,
+        mobile,
+        address,
+        story,
+        website,
+        gender,
+      } = req.body;
+
+      if (!fullname)
+        return res.status(400).json({ msg: "Please add your fullname" });
+
+      const user = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        {
+          avatar,
+          fullname,
+          mobile,
+          address,
+          story,
+          website,
+          gender,
+        }
+      );
+
+      res.json({ msg: "User Updated" });
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 module.exports = userCtrl;
