@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // import action
-import { followAction } from "../redux/actions/profileAction";
+import { followAction, unfollowAction } from "../redux/actions/profileAction";
 
 const FollowBtn = ({ user }) => {
   const dispatch = useDispatch();
@@ -17,7 +17,14 @@ const FollowBtn = ({ user }) => {
 
   const unfollowHandler = () => {
     setFollow(false);
+    dispatch(unfollowAction({ users: profile.users, user, auth }));
   };
+
+  useEffect(() => {
+    if (auth.user.following.find((item) => item._id === user._id)) {
+      setFollow(true);
+    }
+  }, [user._id, auth.user.following]);
   return (
     <>
       {follow ? (

@@ -6,6 +6,7 @@ export const PROFILETYPES = {
   LOADING: "LOADING",
   GET_USER: "GET_USER",
   FOLLOW: "FOLLOW",
+  UNFOLLOW: "UNFOLLOW",
 };
 
 export const getProfileUsers = ({ users, id, auth }) => async (dispatch) => {
@@ -17,6 +18,7 @@ export const getProfileUsers = ({ users, id, auth }) => async (dispatch) => {
         payload: true,
       });
       const res = await getDataAPI(`profile/${id}`, auth.token);
+      console.log(res.data);
       dispatch({
         type: PROFILETYPES.GET_USER,
         payload: res.data,
@@ -86,10 +88,57 @@ export const updateProfile = ({ avatar, editData, auth }) => async (
   }
 };
 
-export const followAction = ({ users, user, auth }) => (dispatch) => {
+export const followAction = ({ users, user, auth }) => async (dispatch) => {
   const newUser = { ...user, followers: [...user.followers, auth.user] };
   dispatch({
     type: PROFILETYPES.FOLLOW,
     payload: newUser,
   });
+  dispatch({
+    type: GLOBALTYPES.AUTH,
+    payload: {
+      ...auth,
+      user: { ...auth.user, following: [...auth.user.following, newUser] },
+    },
+  });
+
+  try {
+    await patchDataAPI(`user/${user._id}/follow`, null, auth.token);
+  } catch (err) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: { error: err.response.data.msg },
+    });
+  }
+};
+
+export const unfollowAction = ({ users, user, auth }) => async (dispatch) => {
+  try {
+    const newUser = {
+      ...user,
+
+      followers: user.followers.filter((x) => x._id !== auth.user._id),
+    };
+    dispatch({
+      type: GLOBALTYPES.AUTH,
+      payload: {
+        ...auth,
+        user: {
+          ...auth.user,
+          following: auth.user.following.filter((x) => x._id !== newUser._id),
+        },
+      },
+    });
+    dispatch({
+      type: PROFILETYPES.UNFOLLOW,
+      payload: newUser,
+    });
+
+    await patchDataAPI(`user/${user._id}/unfollow`, null, auth.token);
+  } catch (err) {
+    dispatch({
+      type: GLOBALTYPES.ALERT,
+      payload: { error: err.response.data.msg },
+    });
+  }
 };

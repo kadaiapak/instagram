@@ -25,6 +25,13 @@ const profileReducer = (state = initialState, action) => {
           x._id === action.payload._id ? action.payload : x
         ),
       };
+    case PROFILETYPES.UNFOLLOW:
+      return {
+        ...state,
+        users: state.users.map((x) =>
+          x._id === action.payload._id ? action.payload : x
+        ),
+      };
     default:
       return state;
   }

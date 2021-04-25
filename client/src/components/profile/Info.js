@@ -23,7 +23,7 @@ const Info = () => {
         })
       );
     }
-  }, [id, auth, dispatch, profile.users]);
+  }, [id, auth, dispatch, profile.users, profile.users.followers]);
   return (
     <div className="info">
       {userProfile.map((user) => (
