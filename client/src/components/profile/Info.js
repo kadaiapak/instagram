@@ -5,11 +5,20 @@ import { getProfileUsers } from "../../redux/actions/profileAction";
 import Avatar from "../Avatar";
 import FollowBtn from "../FollowBtn";
 import EditProfile from "./EditProfile";
+import Followers from "./Followers";
+import Following from "./Following";
 
 const Info = () => {
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState([]);
+
+  // state untuk toggle followers dan folloing Modal
+  const [showFollowers, setShowFollowers] = useState(false);
+  const [showFollowing, setShowFollowing] = useState(false);
+
+  //state untuk toggle Edit Modal
   const [onEdit, setOnEdit] = useState(false);
+
   const { id } = useParams();
   const { auth, profile } = useSelector((state) => state);
   useEffect(() => {
@@ -47,10 +56,17 @@ const Info = () => {
               <span className="mr-4" style={{ color: "black" }}>
                 27 posts
               </span>
-              <span className="mr-4" style={{ color: "black" }}>
+              <span
+                className="mr-4"
+                style={{ color: "black" }}
+                onClick={() => setShowFollowers(true)}
+              >
                 {user.followers.length} followers
               </span>
-              <span style={{ color: "black" }}>
+              <span
+                style={{ color: "black" }}
+                onClick={() => setShowFollowing(true)}
+              >
                 {user.following.length} following
               </span>
             </div>
@@ -66,6 +82,18 @@ const Info = () => {
           </div>
           {auth.user._id === user._id && onEdit && (
             <EditProfile setOnEdit={setOnEdit} />
+          )}
+          {showFollowers && (
+            <Followers
+              users={user.followers}
+              setShowFollowers={setShowFollowers}
+            />
+          )}
+          {showFollowing && (
+            <Following
+              users={user.following}
+              setShowFollowing={setShowFollowing}
+            />
           )}
         </div>
       ))}

@@ -18,7 +18,6 @@ export const getProfileUsers = ({ users, id, auth }) => async (dispatch) => {
         payload: true,
       });
       const res = await getDataAPI(`profile/${id}`, auth.token);
-      console.log(res.data);
       dispatch({
         type: PROFILETYPES.GET_USER,
         payload: res.data,
@@ -89,7 +88,17 @@ export const updateProfile = ({ avatar, editData, auth }) => async (
 };
 
 export const followAction = ({ users, user, auth }) => async (dispatch) => {
-  const newUser = { ...user, followers: [...user.followers, auth.user] };
+  let newUser;
+  if (users.every((item) => item._id !== user._id)) {
+    newUser = { ...user, followers: [...user.followers, auth.user] };
+  } else {
+    users.forEach((item) => {
+      if (item._id === user._id) {
+        newUser = { ...item, followers: [...item.followers, auth.user] };
+      }
+    });
+  }
+  console.log({ newUser });
   dispatch({
     type: PROFILETYPES.FOLLOW,
     payload: newUser,
@@ -101,7 +110,7 @@ export const followAction = ({ users, user, auth }) => async (dispatch) => {
       user: { ...auth.user, following: [...auth.user.following, newUser] },
     },
   });
-
+  console.log({ users });
   try {
     await patchDataAPI(`user/${user._id}/follow`, null, auth.token);
   } catch (err) {
@@ -113,27 +122,39 @@ export const followAction = ({ users, user, auth }) => async (dispatch) => {
 };
 
 export const unfollowAction = ({ users, user, auth }) => async (dispatch) => {
-  try {
-    const newUser = {
+  let newUser;
+  if (users.every((item) => item._id !== user._id)) {
+    newUser = {
       ...user,
-
       followers: user.followers.filter((x) => x._id !== auth.user._id),
     };
-    dispatch({
-      type: GLOBALTYPES.AUTH,
-      payload: {
-        ...auth,
-        user: {
-          ...auth.user,
-          following: auth.user.following.filter((x) => x._id !== newUser._id),
-        },
+  } else {
+    users.forEach((item) => {
+      if (item._id === user._id) {
+        newUser = {
+          ...item,
+          followers: item.followers.filter((x) => x._id !== auth.user._id),
+        };
+      }
+    });
+  }
+  console.log(newUser);
+  dispatch({
+    type: GLOBALTYPES.AUTH,
+    payload: {
+      ...auth,
+      user: {
+        ...auth.user,
+        following: auth.user.following.filter((x) => x._id !== newUser._id),
       },
-    });
-    dispatch({
-      type: PROFILETYPES.UNFOLLOW,
-      payload: newUser,
-    });
-
+    },
+  });
+  dispatch({
+    type: PROFILETYPES.UNFOLLOW,
+    payload: newUser,
+  });
+  console.log({ users });
+  try {
     await patchDataAPI(`user/${user._id}/unfollow`, null, auth.token);
   } catch (err) {
     dispatch({

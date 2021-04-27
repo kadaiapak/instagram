@@ -1,14 +1,26 @@
 import React from "react";
 import Avatar from "../Avatar";
 import { Link } from "react-router-dom";
-const UserCard = ({ user, border, closeHandle }) => {
+const UserCard = ({
+  children,
+  user,
+  border,
+  closeHandle,
+  setShowFollowers,
+  setShowFollowing,
+}) => {
+  const handleCloseAll = () => {
+    if (closeHandle) closeHandle();
+    if (setShowFollowers) setShowFollowers(false);
+    if (setShowFollowing) setShowFollowing(false);
+  };
   return (
-    <div className={`p-2 ${border}`}>
+    <div className={` d-flex p-2 ${border} justify-content-between`}>
       <div>
         <Link
           to={`/profile/${user._id}`}
           className="d-flex align-items-center"
-          onClick={closeHandle}
+          onClick={handleCloseAll}
         >
           <Avatar src={user.avatar} size="small-avatar" />
           <div className="ml-3" style={{ transform: "translateY(-2px)" }}>
@@ -17,6 +29,7 @@ const UserCard = ({ user, border, closeHandle }) => {
           </div>
         </Link>
       </div>
+      {children}
     </div>
   );
 };
