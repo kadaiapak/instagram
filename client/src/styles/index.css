@@ -53,3 +53,9 @@ code {
 
 /* --------Follow Btn----------- */
 @import url("followBtn.css");
+
+/* ----------- home -------------- */
+@import url("home.css");
+
+/* ---------- status modal ----------- */
+@import url("status_modal.css");

@@ -6,6 +6,7 @@ import PageRender from "./customRouter/PageRender";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import StatusModal from "./components/StatusModal";
 
 import Header from "./components/header/Header";
 
@@ -16,7 +17,7 @@ import ProtectRouter from "./customRouter/ProtectRouter";
 
 function App() {
   const dispatch = useDispatch();
-  const { auth } = useSelector((state) => state);
+  const { auth, status } = useSelector((state) => state);
   useEffect(() => {
     dispatch(refreshToken());
   }, [dispatch]);
@@ -25,6 +26,9 @@ function App() {
       <input type="checkbox" id="theme" />
       <div className="App">
         {auth.token && <Header />}
+
+        {/* jika status di toggle menjadi true, maka munculkan status modal */}
+        {status && <StatusModal />}
         <div className="main">
           <Route path="/" component={auth.token ? Home : Login} exact />
           <Route path="/register" component={Register} />
