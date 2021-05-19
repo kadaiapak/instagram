@@ -19,7 +19,11 @@ export const cloudUpload = async (images) => {
   let imgArr = [];
   for (const item of images) {
     const formData = new FormData();
-    formData.append("file", item);
+    if (item.camera) {
+      formData.append("file", item.camera);
+    } else {
+      formData.append("file", item);
+    }
 
     formData.append("upload_preset", "b9scl38x");
     formData.append("cloud_name", "dk0z6km58");

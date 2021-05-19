@@ -25,7 +25,7 @@ const userCtrl = {
         // dittambahkan populate followers dan following karena jika tidak, getuser controller ini akan memberikan data user.follower
         // yang hanya berupa object id saja, jadi data user.follower itu cuma berupa array of _id, sehingga saat dilooping sewaktu
         // melakukan filter saat process unfollow user.followers maka terjadi error karna user.followers tersebut hanya berupa array
-        // of object id, namun jika dilakukan populate maka proses tersebut bisa dilakukan karena kita melakukan filter dari
+        // of id, namun jika dilakukan populate maka proses tersebut bisa dilakukan karena kita melakukan filter dari
         // array of object dari user
         .populate("followers following", "-password");
       if (!user) {

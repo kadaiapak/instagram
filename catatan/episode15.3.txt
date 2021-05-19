@@ -1,0 +1,2 @@
+1. Membuat post model
+2. membuat post ctrl

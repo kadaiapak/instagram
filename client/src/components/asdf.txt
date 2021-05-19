@@ -1,0 +1,57 @@
+1. membuat state untuk membuka modal untuk update status
+
+2. membuat 2 input 
+    a. membuat input type text.. untuk update status
+    b. membuat input type file.. untuk upload foto status nya
+        *[images, setImages] setState untuk menampung file image dalam bentuk array
+        *membuat onclick handler function.. yaitu fungsi yang menjalankan proses saat image kita upload
+         const imageHandler = (e) => {
+         const files = [...e.target.files];
+         let newImages = [];
+         let err = "";
+         files.forEach((file) => {
+         if (!file) return (err = "Select Image");
+         if (file.type !== "image/png" && file.type !== "image/jpeg") {
+            return (err = "Image ins Incorrect");
+         }
+         return newImages.push(file);
+         });
+         if (err) dispatch({ type: GLOBALTYPES.ALERT, payload: { error: err } });
+         setImages([...images, ...newImages]);
+         };
+         
+3. show image yang kita upload 
+        <div className="show_images">
+            {images.map((img, index) => (
+              <div id="file_img" key={index}>
+                <img
+                  className="img-thumbnail"
+                  src={img.camera ? img.camera : URL.createObjectURL(img)}
+                  alt="status"
+                  style={{ filter: theme ? "invert(1)" : "invert(0)" }}
+                />
+                <span onClick={() => deleteHandler(index)}>&times;</span>
+              </div>
+            ))}
+        </div>
+
+4. Fitur Screenshoot pakai webcam
+    * stream, setStream useState
+    * tracks setTracks useState
+    * fungsi untuk menghidupkan webcam jika tombol dipencet
+        const handleStream = () => {
+            setStream(true);
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices
+                .getUserMedia({ video: true })
+                .then((mediaStream) => {
+                videoRef.current.srcObject = mediaStream;
+                videoRef.current.play();
+                const track = mediaStream.getTracks();
+                setTracks(track[0]);
+                })
+                .catch((err) => console.log(err));
+            }
+        };
+
+5. 

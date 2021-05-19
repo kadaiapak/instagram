@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 // export ROuter
 const userRouter = require("./route/userRouter");
 const authRouter = require("./route/authRouter");
+const postRouter = require("./route/postRouter");
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/api", authRouter);
 app.use("/api", userRouter);
+app.use("/api", postRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(

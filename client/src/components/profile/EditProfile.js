@@ -31,7 +31,6 @@ const EditProfile = ({ setOnEdit }) => {
     const err = imageUpload(file);
     if (err) {
       setError(err);
-      console.log(error);
     } else {
       setAvatar(file);
     }

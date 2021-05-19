@@ -1,0 +1,24 @@
+1.  membuat user model
+        fullname, username, email, password, avatar, role, gender, mobile, address, story, website, followers, following
+2.  membuat user route
+3.  membuat auth controller
+        // user melakukan registrasi
+            * mengambil data registrasi dari frontend berupa username, name, email, password
+            * melakukan validasi data seperti password length dll
+            * hashing password menggunakan bcrypt
+            * membuat user baru dari user model menggunakan data yang sudah divalidasi
+                ex : const newUser =  new User({ nama, email, hashPassword})
+            * createAccessToken menggunakan newUser id (jsonwebtoken)
+            * createRefreshToken menggunakan newUser id (jsonwebtoken)
+            * save new user yang sudah dibuat tersebut
+            * jika success maka res.send token, dan data dari user yang sudah dibuat minus password
+        // user melakukan login
+            * ambil data email, dan password dari frontend
+            * check apakah ada user yang menggunakan email tersebut
+            * jika ada maka compare password yang dientrikan dengan password yang ada pada database menggunakan bcrypt.compare
+            * jika success maka
+            * createAccessToken menggunakan user id (jsonwebtoken)
+            * createRefreshToken menggunakan user id (jsonwebtoken)
+            * res.send token, dan data user
+        // user melakukan logout
+            * clear cookies
