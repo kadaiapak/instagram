@@ -4,6 +4,9 @@ const protect = require("../middleware/protect");
 
 const router = express.Router();
 
-router.route("/posts").post(protect, postCtrl.createPost);
+router
+  .route("/posts")
+  .post(protect, postCtrl.createPost)
+  .get(protect, postCtrl.getPosts);
 
 module.exports = router;

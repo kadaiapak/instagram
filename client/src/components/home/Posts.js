@@ -1,16 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import LoadingIcon from "../../images/loading.gif";
+
 const Posts = () => {
   const { alert } = useSelector((state) => state);
   return (
     <div>
       {alert.loading ? (
-        <img
-          src="/images/loading.gif"
-          alt="loading"
-          style={{ width: "60px", textAlign: "center" }}
-        ></img>
+        <img src={LoadingIcon} alt="loading" className="d-block mx-auto"></img>
       ) : (
         <h1>Post</h1>
       )}

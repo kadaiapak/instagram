@@ -14,6 +14,7 @@ import { refreshToken } from "./redux/actions/authAction";
 
 import ProtectRouter from "./customRouter/ProtectRouter";
 import StatModal from "./components/StatModal";
+import { getPosts } from "./redux/actions/postAction";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ function App() {
   useEffect(() => {
     dispatch(refreshToken());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (auth.token) dispatch(getPosts(auth.token));
+  }, [dispatch, auth]);
   return (
     <Router>
       <input type="checkbox" id="theme" />

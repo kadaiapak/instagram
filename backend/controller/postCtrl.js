@@ -22,6 +22,20 @@ const postCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getPosts: async (req, res) => {
+    try {
+      const posts = await Posts.find({
+        user: [...req.user.following, req.user._id],
+      });
+      res.json({
+        msg: "success",
+        result: posts.length,
+        posts,
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
 };
 
 module.exports = postCtrl;
