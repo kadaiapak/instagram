@@ -8,6 +8,7 @@
   z-index: 2;
   display: flex;
   align-items: center;
+  background: white;
 }
 
 .navbar_container .container {
@@ -134,12 +135,14 @@ img .small-avatar {
 @media (max-width: 768px) {
   /* css agar menu pindah kebawah saat mode layar kecil */
   .menu {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    top: calc(100vh - 50px);
     left: 0;
     width: 100%;
-    box-shadow: 0 0 10px #ddd;
     z-index: 2;
+    border-top: 1px solid #ddd;
+    background: white;
+    height: 50px;
   }
 
   /* css agar menu yang pindah kebawah tersebut bisa align dengan rapi */

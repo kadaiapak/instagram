@@ -9,4 +9,6 @@ router
   .post(protect, postCtrl.createPost)
   .get(protect, postCtrl.getPosts);
 
+router.route("/post/:id").patch(protect, postCtrl.updatePost);
+
 module.exports = router;

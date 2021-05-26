@@ -26,7 +26,9 @@ const postCtrl = {
     try {
       const posts = await Posts.find({
         user: [...req.user.following, req.user._id],
-      });
+      })
+        .sort("-createdAt")
+        .populate("user likes", "fullname username avatar");
       res.json({
         msg: "success",
         result: posts.length,
@@ -34,6 +36,25 @@ const postCtrl = {
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
+    }
+  },
+  updatePost: async (req, res) => {
+    try {
+      const { content, images } = req.body;
+      const post = await Posts.findOneAndUpdate(
+        { _id: req.params.id }, //req.params.id ....... bukan req.params._id
+        { content, images }
+      ).populate("user likes", "avatar username fullname");
+      res.json({
+        msg: "Post updated!",
+        newPost: {
+          ...post._doc,
+          content,
+          images,
+        },
+      });
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
     }
   },
 };

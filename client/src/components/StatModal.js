@@ -1,20 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
-import { createPost } from "../redux/actions/postAction";
+import { createPost, updatePost } from "../redux/actions/postAction";
 
 const StatModal = () => {
   const dispatch = useDispatch();
 
   const [images, setImages] = useState([]);
   const [content, setContent] = useState("");
-  const { auth, alert, theme } = useSelector((state) => state);
+  const { auth, alert, theme, status } = useSelector((state) => state);
 
   // untuk keperluan webcame capture
   const [stream, setStream] = useState(false);
   const [tracks, setTracks] = useState("");
   const videoRef = useRef();
   const refCanvas = useRef();
+
   const handleStream = () => {
     setStream(true);
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -82,7 +83,11 @@ const StatModal = () => {
         payload: { error: "insert an image" },
       });
     }
-    dispatch(createPost({ content, images, auth }));
+    if (status.onEdit) {
+      dispatch(updatePost({ content, images, auth, status }));
+    } else {
+      dispatch(createPost({ content, images, auth }));
+    }
     setContent("");
     setImages([]);
     if (tracks) tracks.stop();
@@ -91,6 +96,14 @@ const StatModal = () => {
       payload: false,
     });
   };
+
+  useEffect(() => {
+    if (status.onEdit) {
+      setContent(status.content);
+      setImages(status.images);
+    }
+  }, [status]);
+
   return (
     <div className="status_modal">
       <form onSubmit={submitStat}>
@@ -122,7 +135,13 @@ const StatModal = () => {
               <div id="file_img" key={index}>
                 <img
                   className="img-thumbnail"
-                  src={img.camera ? img.camera : URL.createObjectURL(img)}
+                  src={
+                    img.camera
+                      ? img.camera
+                      : img.url
+                      ? img.url
+                      : URL.createObjectURL(img)
+                  }
                   alt="status"
                   style={{ filter: theme ? "invert(1)" : "invert(0)" }}
                 />

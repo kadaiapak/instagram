@@ -12,7 +12,7 @@ const postReducer = (state = initialState, action) => {
     case POST_TYPES.CREATE_POST:
       return {
         ...state,
-        posts: [...state.posts, action.payload],
+        posts: [action.payload, ...state.posts],
       };
     case POST_TYPES.LOADING_POST:
       return {
@@ -26,6 +26,13 @@ const postReducer = (state = initialState, action) => {
         result: action.payload.result,
       };
 
+    case POST_TYPES.UPDATE_POST:
+      return {
+        ...state,
+        posts: state.posts.map((x) =>
+          x._id === action.payload._id ? action.payload : x
+        ),
+      };
     default:
       return state;
   }

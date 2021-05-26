@@ -1,4 +1,4 @@
-import { getDataAPI, postDataAPI } from "../../utils/fetchData";
+import { getDataAPI, patchDataAPI, postDataAPI } from "../../utils/fetchData";
 import { cloudUpload } from "../../utils/imageUpload";
 import { GLOBALTYPES } from "./globalTypes";
 
@@ -6,6 +6,7 @@ export const POST_TYPES = {
   CREATE_POST: "CREATE_POST",
   LOADING_POST: "LOADING_POST",
   GET_POSTS: "GET_POSTS",
+  UPDATE_POST: "UPDATE_POST",
 };
 
 export const createPost =
@@ -28,7 +29,7 @@ export const createPost =
 
       dispatch({
         type: POST_TYPES.CREATE_POST,
-        payload: res.data.newPost, //hanya newPost karena kita tidak butuh semua res.data ataupun message nya
+        payload: { ...res.data.newPost, user: auth.user }, //hanya newPost karena kita tidak butuh semua res.data ataupun message nya
       });
 
       dispatch({
@@ -66,3 +67,38 @@ export const getPosts = (token) => async (dispatch) => {
     });
   }
 };
+
+export const updatePost =
+  ({ content, images, auth, status }) =>
+  async (dispatch) => {
+    let media = [];
+    const newUrl = images.filter((img) => !img.url);
+    const oldUrl = images.filter((img) => img.url);
+    if (
+      newUrl.length === 0 &&
+      status.content === content &&
+      oldUrl.length === status.images.length
+    )
+      return;
+    try {
+      dispatch({ type: POST_TYPES.LOADING_POST, payload: true });
+      if (newUrl.length > 0) {
+        media = await cloudUpload(newUrl);
+      }
+      const res = await patchDataAPI(
+        `post/${status._id}`,
+        {
+          content,
+          images: [...oldUrl, ...media],
+        },
+        auth.token
+      );
+      dispatch({ type: POST_TYPES.UPDATE_POST, payload: res.data.newPost });
+      dispatch({ type: POST_TYPES.LOADING_POST, payload: false });
+    } catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };

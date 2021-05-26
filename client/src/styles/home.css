@@ -1,6 +1,7 @@
 .status {
   background: white;
-  box-shadow: 0 0 5px #ddd;
+  border: 1px solid #ddd;
+  /* box-shadow: 0 0 5px #ddd; */
   padding: 20px;
   border-radius: 5px;
 }
@@ -18,4 +19,71 @@
 
 .statusBtn:hover {
   background: #ddd;
+}
+
+/* ------------ Post -------------- */
+
+/* ----------- Post Header ---------- */
+.card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 25px;
+}
+
+.card_header .card_name {
+  transform: translateY(3px);
+}
+
+.card_header .dropdown-menu {
+  position: absolute;
+  left: inherit !important;
+  right: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  margin: 5px 0;
+}
+
+/* ---------- Card-Body Content */
+
+.card_body-content {
+  padding: 0 25px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.card_body-content .readMore {
+  color: #777;
+  cursor: pointer;
+}
+
+/* style image pada post agar ukuranny sama besar atau sama tinggi */
+.card_image {
+  height: 500px;
+  object-fit: cover;
+}
+
+/* ------------ Post Card Footer ----------------- */
+
+.card_footer .card_icon_menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  cursor: pointer;
+}
+
+.card_icon_menu i {
+  font-size: 28px;
+  margin: 10px;
+}
+
+/* send svg */
+.card_icon_menu img {
+  width: 28px;
+  height: 28px;
+  transform: translate(5px, -5px);
+  opacity: 0.9;
 }

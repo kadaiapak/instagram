@@ -1,17 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import LoadingIcon from "../../images/loading.gif";
+import CardBody from "./postcard/CardBody";
+import CardFooter from "./postcard/CardFooter";
+import CardHeader from "./postcard/CardHeader";
 
 const Posts = () => {
-  const { alert } = useSelector((state) => state);
+  const { homePost } = useSelector((state) => state);
   return (
     <div>
-      {alert.loading ? (
-        <img src={LoadingIcon} alt="loading" className="d-block mx-auto"></img>
-      ) : (
-        <h1>Post</h1>
-      )}
+      {homePost.posts.map((post) => (
+        <div key={post._id} className="card my-3">
+          <CardHeader post={post} />
+          <CardBody post={post} />
+          <CardFooter post={post} />
+        </div>
+      ))}
     </div>
   );
 };

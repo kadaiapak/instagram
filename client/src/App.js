@@ -37,9 +37,7 @@ function App() {
           <Route path="/" component={auth.token ? Home : Login} exact />
           <Route path="/register" component={Register} />
           <ProtectRouter path="/:page" component={PageRender} exact />
-          {/* <Route path="/:page" component={PageRender} exact /> */}
           <ProtectRouter path="/:page/:id" component={PageRender} exact />
-          {/* <Route path="/:page/:id" component={PageRender} exact /> */}
         </div>
       </div>
     </Router>
