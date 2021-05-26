@@ -83,16 +83,13 @@ const postCtrl = {
 
   dislikePost: async (req, res) => {
     try {
-      // await Posts.findOneAndUpdate(
-      //   { _id: req.params.id },
-      //   { $pull: { likes: req.user._id } },
-      //   { new: true }
-      // );
-      const post = await Posts.findOne({
-        _id: req.params.id,
-        likes: req.user._id,
-      });
-      res.json({ post });
+      await Posts.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { likes: req.user._id } },
+        { new: true }
+      );
+
+      res.json({ msg: "dislike it" });
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

@@ -132,7 +132,10 @@ export const dislikePost =
       payload: newPost,
     });
     try {
-      await patchDataAPI(`post/${post._id}`, null, auth.token);
+      // jangan salah masukkan api, kalau tanpa /dislike maka yang terupdate semua data post bukan cuman like nya saja
+      // semua data post menjadi null
+
+      await patchDataAPI(`post/${post._id}/dislike`, null, auth.token);
     } catch (err) {
       dispatch({
         type: GLOBALTYPES.ALERT,
