@@ -102,3 +102,41 @@ export const updatePost =
       });
     }
   };
+
+export const likePost =
+  ({ post, auth }) =>
+  async (dispatch) => {
+    // menambah auth.user kedalam like post
+    const newPost = { ...post, likes: [...post.likes, auth.user] };
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
+    try {
+      patchDataAPI(`post/${post._id}/like`, null, auth.token);
+    } catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };
+
+export const dislikePost =
+  ({ post, auth }) =>
+  async (dispatch) => {
+    // menghapus auth.user dari post.likes
+    const newPost = {
+      ...post,
+      likes: post.likes.filter((x) => x._id !== auth.user._id),
+    };
+    dispatch({
+      type: POST_TYPES.UPDATE_POST,
+      payload: newPost,
+    });
+    try {
+      await patchDataAPI(`post/${post._id}`, null, auth.token);
+    } catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };

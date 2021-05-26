@@ -10,7 +10,11 @@ const Header = () => {
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light justify-content-between align-middle">
           <Link className="navbar-brand navbar-logo" to="/">
-            <img src="/images/instagram.png" alt="instagram-logo" />
+            <img
+              src="/images/instagram.png"
+              alt="instagram-logo"
+              onClick={() => window.scrollTo({ top: 0 })}
+            />
           </Link>
 
           <Search />

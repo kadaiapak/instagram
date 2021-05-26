@@ -22,6 +22,7 @@ const postCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   getPosts: async (req, res) => {
     try {
       const posts = await Posts.find({
@@ -38,6 +39,7 @@ const postCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   updatePost: async (req, res) => {
     try {
       const { content, images } = req.body;
@@ -53,6 +55,44 @@ const postCtrl = {
           images,
         },
       });
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  },
+
+  likePost: async (req, res) => {
+    try {
+      const post = await Posts.find({
+        _id: req.params.id,
+        likes: req.user._id,
+      });
+      if (post.length > 0) {
+        console.log(post);
+        return res.status(400).json({ msg: "already like" });
+      }
+      await Posts.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { likes: req.user._id } },
+        { new: true }
+      );
+      res.json({ msg: "like success" });
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  },
+
+  dislikePost: async (req, res) => {
+    try {
+      // await Posts.findOneAndUpdate(
+      //   { _id: req.params.id },
+      //   { $pull: { likes: req.user._id } },
+      //   { new: true }
+      // );
+      const post = await Posts.findOne({
+        _id: req.params.id,
+        likes: req.user._id,
+      });
+      res.json({ post });
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

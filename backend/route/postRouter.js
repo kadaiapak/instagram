@@ -11,4 +11,7 @@ router
 
 router.route("/post/:id").patch(protect, postCtrl.updatePost);
 
+router.route("/post/:id/like").patch(protect, postCtrl.likePost);
+router.route("/post/:id/dislike").patch(protect, postCtrl.dislikePost);
+
 module.exports = router;
