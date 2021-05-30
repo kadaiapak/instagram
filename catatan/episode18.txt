@@ -1,0 +1,7 @@
+1. buat useState isLike false, jadi jika tombol like dipencet maka setIsLike menjadi true, dan membuat logo hati menjadi merah
+2. Membuat action like, yang mengirim data post yang dilakukan like
+    // const newPost = {...post, like : [...post.like, auth.user]}
+    // dispatch = update_post, payload : newPost
+3. Membuat controller 
+    // ambil data post, lalu push id user kedalam array like
+        const post = await Post.findOneAndUpdate({_id : req.params.id}, { $push : req.user._id}, {new : true})

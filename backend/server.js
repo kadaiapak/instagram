@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./route/userRouter");
 const authRouter = require("./route/authRouter");
 const postRouter = require("./route/postRouter");
+const commentRouter = require("./route/commentRouter");
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 app.use("/api", authRouter);
 app.use("/api", userRouter);
 app.use("/api", postRouter);
+app.use("/api", commentRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(

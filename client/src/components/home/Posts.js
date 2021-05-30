@@ -1,23 +1,35 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
-import CardBody from "./postcard/CardBody";
-import CardFooter from "./postcard/CardFooter";
-import CardHeader from "./postcard/CardHeader";
+import PostCard from "../PostCard";
 
 const Posts = () => {
   const { homePost } = useSelector((state) => state);
   return (
     <div>
       {homePost.posts.map((post) => (
-        <div key={post._id} className="card my-3">
-          <CardHeader post={post} />
-          <CardBody post={post} />
-          <CardFooter post={post} />
-        </div>
+        <PostCard post={post} key={post._id} />
       ))}
     </div>
   );
 };
 
 export default Posts;
+
+// import React from "react";
+// import { useSelector } from "react-redux";
+// import PostCard from "../PostCard";
+
+// const Posts = () => {
+//   const { homePost } = useSelector((state) => state);
+//   return (
+//     <div>
+//       {homePost.posts.map((post) => (
+//         <>
+//           <PostCard post={post} key={post._id} />;
+//         </>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default Posts;

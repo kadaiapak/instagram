@@ -29,7 +29,14 @@ const postCtrl = {
         user: [...req.user.following, req.user._id],
       })
         .sort("-createdAt")
-        .populate("user likes", "fullname username avatar");
+        .populate("user likes", "fullname username avatar")
+        .populate({
+          path: "comments", // untuk populate comments yang ada di postModel,
+          populate: {
+            path: "user likes", // untuk populate user dan like yang ada dalam comment di dalam post
+            select: "-password", // agar password tidak ikut ter populate
+          },
+        });
       res.json({
         msg: "success",
         result: posts.length,
@@ -47,6 +54,7 @@ const postCtrl = {
         { _id: req.params.id }, //req.params.id ....... bukan req.params._id
         { content, images }
       ).populate("user likes", "avatar username fullname");
+
       res.json({
         msg: "Post updated!",
         newPost: {

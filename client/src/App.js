@@ -18,7 +18,7 @@ import { getPosts } from "./redux/actions/postAction";
 
 function App() {
   const dispatch = useDispatch();
-  const { auth, status } = useSelector((state) => state);
+  const { auth, status, modal } = useSelector((state) => state);
   useEffect(() => {
     dispatch(refreshToken());
   }, [dispatch]);
@@ -29,7 +29,7 @@ function App() {
   return (
     <Router>
       <input type="checkbox" id="theme" />
-      <div className="App">
+      <div className={`App ${(status || modal) && "mode"}`}>
         {auth.token && <Header />}
         {/* jika status di toggle menjadi true, maka munculkan status modal */}
         {status && <StatModal />}

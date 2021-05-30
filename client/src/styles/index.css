@@ -59,3 +59,11 @@ code {
 
 /* ---------- status modal ----------- */
 @import url("status_modal.css");
+
+/* -------- comment text input ------------- */
+@import url("input_comments.css");
+.mode {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
